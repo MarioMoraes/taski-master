@@ -12,6 +12,12 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
+  Future<List<TodoModel>> query({required String text}) async {
+    final data = await _database.query('todo', text);
+    return data.map((item) => TodoModel.fromMap(item)).toList();
+  }
+
+  @override
   Future<void> insertTodo(TodoModel model) {
     return _database.insert('todo', model.toMap());
   }

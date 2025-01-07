@@ -19,12 +19,14 @@ class TodoSearchPage extends StatefulWidget {
 class _TodoSearchPageState extends State<TodoSearchPage> {
   final TodoController _todoController = Injector.get<TodoController>();
 
+  Future<String> _startSearch() async => await _todoController.query(text: '');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SearchBarWidget(func: () {}),
+          String text = SearchBarWidget(func: () => _startSearch),
           BlocSelector<TodoController, TodoState, bool>(
             bloc: _todoController,
             selector: (state) => state.status == SearchStatus.loading,

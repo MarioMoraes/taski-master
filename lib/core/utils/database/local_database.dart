@@ -43,6 +43,11 @@ class LocalDatabase {
     return db.query(table, where: 'isDone = ?', whereArgs: [isDone ? 1 : 0]);
   }
 
+  Future<List<Map<String, dynamic>>> query(String table, String text) async {
+    final db = await database;
+    return db.query(table, where: 'title LIKE ?', whereArgs: ['%$text%']);
+  }
+
   Future<int> update(String table, int id) async {
     final db = await database;
     return db.update(table, {'isDone': true}, where: 'id = ?', whereArgs: [id]);

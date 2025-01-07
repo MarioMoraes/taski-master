@@ -38,6 +38,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             SizedBox(
               width: MediaQuery.sizeOf(context).width * .92,
               child: TextFormField(
+                onFieldSubmitted: (value) {
+                  Navigator.of(context).pop(value);
+                },
                 controller: _textEC,
                 decoration: InputDecoration(
                   fillColor: AppTheme.greyColor.withOpacity(0.3),

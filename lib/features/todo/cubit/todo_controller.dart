@@ -19,6 +19,18 @@ class TodoController extends Cubit<TodoState> {
     return [];
   }
 
+  Future<List<TodoModel>> query({required String text}) async {
+    emit(state.copyWith(status: SearchStatus.loading, listTodo: []));
+    final data = await _repository.query(text: text);
+    if (data.isNotEmpty) {
+      emit(state.copyWith(status: SearchStatus.completed, listTodo: data));
+      return data;
+    } else {
+      emit(state.copyWith(status: SearchStatus.empty));
+    }
+    return [];
+  }
+
   Future<void> insertTodo(TodoModel model) async {
     await _repository.insertTodo(model);
   }
