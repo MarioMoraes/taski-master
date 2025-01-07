@@ -62,24 +62,37 @@ class _TodoDonePageState extends State<TodoDonePage> {
               builder: (context, list) {
                 _listTodo = list;
 
-                return SliverPadding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate(
-                      list
-                          .map(
-                            (e) => Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10, top: 10),
-                              child:
-                                  DeleteItemWidget(id: e.id!, title: e.title),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                );
+                return list.isEmpty
+                    ? SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: MediaQuery.sizeOf(context).height * .60,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/todo.png'),
+                            ],
+                          ),
+                        ),
+                      )
+                    : SliverPadding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        sliver: SliverList(
+                          delegate: SliverChildListDelegate(
+                            list
+                                .map(
+                                  (e) => Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10, top: 10),
+                                    child: DeleteItemWidget(
+                                        id: e.id!, title: e.title),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      );
               }),
         ],
       ),

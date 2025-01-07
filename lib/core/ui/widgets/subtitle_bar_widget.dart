@@ -18,14 +18,11 @@ class SubtitleBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 30, top: 10),
+        padding: const EdgeInsets.only(left: 20, right: 30),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Completed Tasks",
-              style: AppTheme.textBold,
-            ),
+            Text("Completed Tasks", style: AppTheme.textBold),
             const Spacer(),
             InkWell(
               onTap: func,
