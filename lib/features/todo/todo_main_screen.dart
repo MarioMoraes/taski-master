@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:taski/features/todo/pages/todo_create_page.dart';
 import 'package:taski/features/todo/pages/todo_list_page.dart';
 
@@ -67,26 +66,26 @@ class _TodoMainScreenState extends State<TodoMainScreen> {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/todo_icon.svg',
+          icon: Image.asset(
+            'assets/icons/todo_icon.png',
           ),
           label: 'Todo',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/plus_icon.svg',
+          icon: Image.asset(
+            'assets/icons/plus_icon.png',
           ),
           label: 'Create',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/search_icon.svg',
+          icon: Image.asset(
+            'assets/icons/search_icon.png',
           ),
           label: 'Search',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/checked_icon.svg',
+          icon: Image.asset(
+            'assets/icons/checked_icon.png',
           ),
           label: 'Done',
         ),

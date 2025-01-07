@@ -3,11 +3,27 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:taski/core/ui/theme/app_theme.dart';
 import 'package:taski/core/ui/widgets/welcome_bar_widget.dart';
 import 'package:taski/features/todo/cubit/todo_state.dart';
+import 'package:taski/models/todo_model.dart';
 
-class TodoCreatePage extends StatelessWidget {
-  TodoCreatePage({super.key});
+class TodoCreatePage extends StatefulWidget {
+  const TodoCreatePage({super.key});
 
+  @override
+  State<TodoCreatePage> createState() => _TodoCreatePageState();
+}
+
+class _TodoCreatePageState extends State<TodoCreatePage> {
   final TodoController _todoController = Injector.get<TodoController>();
+
+  final _titleEC = TextEditingController();
+  final _descriptionEC = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _titleEC.dispose();
+    _descriptionEC.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,38 +85,95 @@ class TodoCreatePage extends StatelessWidget {
   void _addTask(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppTheme.greyColor,
+      backgroundColor: AppTheme.primaryColor,
       elevation: 5,
       builder: (context) {
         return SizedBox(
-          height: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width,
-                height: 50,
-                child: Row(
+          height: 250,
+          width: MediaQuery.sizeOf(context).width,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30),
+                Row(
                   children: [
-                    Checkbox(
-                      activeColor: AppTheme.greyColor,
-                      value: false,
-                      side: const BorderSide(color: AppTheme.greyColor),
-                      onChanged: (value) {},
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'What´s in you mind?',
-                        hintStyle: AppTheme.textNormal.copyWith(
-                          color: AppTheme.greyColor,
-                          fontSize: 18,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .80,
+                      child: TextFormField(
+                        controller: _titleEC,
+                        decoration: InputDecoration(
+                          fillColor: AppTheme.primaryColor,
+                          prefixIcon: Image.asset(
+                            'assets/icons/unchecked_icon.png',
+                            width: 24,
+                            height: 24,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.all(10.0),
+                          hintText: 'What´s in you mind?',
+                          hintStyle: AppTheme.textNormal.copyWith(
+                            color: AppTheme.greyColor,
+                            fontSize: 19,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              )
-            ],
+                const SizedBox(height: 30),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .80,
+                      child: TextFormField(
+                        controller: _descriptionEC,
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.all(10.0),
+                          fillColor: AppTheme.primaryColor,
+                          prefixIcon: Image.asset(
+                            'assets/icons/leading_icon.png',
+                            width: 24,
+                            height: 24,
+                          ),
+                          hintText: 'Add a note...',
+                          hintStyle: AppTheme.textNormal.copyWith(
+                            color: AppTheme.greyColor,
+                            fontSize: 19,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      _todoController.insertTodo(
+                        TodoModel(
+                          title: _titleEC.text,
+                          subtitle: _descriptionEC.text,
+                          isDone: false,
+                        ),
+                      );
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      'Create',
+                      style: AppTheme.textBold.copyWith(
+                        color: AppTheme.blueColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
