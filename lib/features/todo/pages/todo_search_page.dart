@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:taski/core/ui/widgets/search_bar_widget.dart';
 import 'package:taski/features/todo/cubit/todo_state.dart';
 
 import '../../../core/ui/theme/app_theme.dart';
@@ -18,15 +17,61 @@ class TodoSearchPage extends StatefulWidget {
 
 class _TodoSearchPageState extends State<TodoSearchPage> {
   final TodoController _todoController = Injector.get<TodoController>();
+  final _textEC = TextEditingController();
 
-  Future<String> _startSearch() async => await _todoController.query(text: '');
+  @override
+  void dispose() {
+    super.dispose();
+    _textEC.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          String text = SearchBarWidget(func: () => _startSearch),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * .90,
+                    child: TextFormField(
+                      onFieldSubmitted: (value) {
+                        _todoController.query(text: value);
+                      },
+                      controller: _textEC,
+                      decoration: InputDecoration(
+                        fillColor: AppTheme.greyColor.withOpacity(0.3),
+                        prefixIcon: Image.asset(
+                          'assets/icons/search_icon.png',
+                          color: AppTheme.blueColor,
+                        ),
+                        suffixIcon: InkWell(
+                          onTap: () => _textEC.text = "",
+                          child: const Icon(
+                            Icons.cancel,
+                            size: 30,
+                            color: AppTheme.greyColor,
+                          ),
+                        ),
+                        border: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        contentPadding: const EdgeInsets.all(10.0),
+                        hintStyle: AppTheme.textNormal.copyWith(
+                          color: AppTheme.greyColor,
+                          fontSize: 19,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           BlocSelector<TodoController, TodoState, bool>(
             bloc: _todoController,
             selector: (state) => state.status == SearchStatus.loading,
