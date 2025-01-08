@@ -43,4 +43,8 @@ class TodoController extends Cubit<TodoState> {
   Future<void> deleteTodo(int id) async {
     await _repository.deleteTodo(id);
   }
+
+  Future<void> cleanList() async {
+    emit(state.copyWith(listTodo: []));
+  }
 }

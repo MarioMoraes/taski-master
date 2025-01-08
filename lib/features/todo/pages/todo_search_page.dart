@@ -6,7 +6,7 @@ import 'package:taski/features/todo/cubit/todo_state.dart';
 
 import '../../../core/ui/theme/app_theme.dart';
 import '../../../models/todo_model.dart';
-import '../widgets/delete_item_widget.dart';
+import '../widgets/detail_list_widget.dart';
 
 class TodoSearchPage extends StatefulWidget {
   const TodoSearchPage({super.key});
@@ -18,6 +18,12 @@ class TodoSearchPage extends StatefulWidget {
 class _TodoSearchPageState extends State<TodoSearchPage> {
   final TodoController _todoController = Injector.get<TodoController>();
   final _textEC = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _todoController.cleanList();
+  }
 
   @override
   void dispose() {
@@ -39,6 +45,7 @@ class _TodoSearchPageState extends State<TodoSearchPage> {
                   SizedBox(
                     width: MediaQuery.sizeOf(context).width * .90,
                     child: TextFormField(
+                      cursorColor: Colors.black,
                       onFieldSubmitted: (value) {
                         _todoController.query(text: value);
                       },
@@ -48,6 +55,22 @@ class _TodoSearchPageState extends State<TodoSearchPage> {
                         prefixIcon: Image.asset(
                           'assets/icons/search_icon.png',
                           color: AppTheme.blueColor,
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppTheme.blueColor,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppTheme.blueColor,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
                         ),
                         suffixIcon: InkWell(
                           onTap: () => _textEC.text = "",
@@ -119,8 +142,12 @@ class _TodoSearchPageState extends State<TodoSearchPage> {
                                   (e) => Padding(
                                     padding: const EdgeInsets.only(
                                         left: 10, right: 10, top: 10),
-                                    child: DeleteItemWidget(
-                                        id: e.id!, title: e.title),
+                                    child: DetailListWidget(
+                                      id: e.id!,
+                                      title: e.title,
+                                      subtitle: e.subtitle,
+                                      isDone: e.isDone,
+                                    ),
                                   ),
                                 )
                                 .toList(),

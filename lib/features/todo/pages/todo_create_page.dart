@@ -13,6 +13,7 @@ class TodoCreatePage extends StatefulWidget {
 }
 
 class _TodoCreatePageState extends State<TodoCreatePage> {
+  final _formKey = GlobalKey<FormState>();
   final TodoController _todoController = Injector.get<TodoController>();
 
   final _titleEC = TextEditingController();
@@ -93,86 +94,92 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
           width: MediaQuery.sizeOf(context).width,
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .80,
-                      child: TextFormField(
-                        controller: _titleEC,
-                        decoration: InputDecoration(
-                          fillColor: AppTheme.primaryColor,
-                          prefixIcon: Image.asset(
-                            'assets/icons/unchecked_icon.png',
-                            width: 24,
-                            height: 24,
-                          ),
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.all(10.0),
-                          hintText: 'What´s in you mind?',
-                          hintStyle: AppTheme.textNormal.copyWith(
-                            color: AppTheme.greyColor,
-                            fontSize: 19,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .80,
-                      child: TextFormField(
-                        controller: _descriptionEC,
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.all(10.0),
-                          fillColor: AppTheme.primaryColor,
-                          prefixIcon: Image.asset(
-                            'assets/icons/leading_icon.png',
-                            width: 24,
-                            height: 24,
-                          ),
-                          hintText: 'Add a note...',
-                          hintStyle: AppTheme.textNormal.copyWith(
-                            color: AppTheme.greyColor,
-                            fontSize: 19,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * .80,
+                        child: TextFormField(
+                          controller: _titleEC,
+                          decoration: InputDecoration(
+                            fillColor: AppTheme.primaryColor,
+                            prefixIcon: Image.asset(
+                              'assets/icons/unchecked_icon.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(10.0),
+                            hintText: 'What´s in you mind?',
+                            hintStyle: AppTheme.textNormal.copyWith(
+                              color: AppTheme.greyColor,
+                              fontSize: 19,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      _todoController.insertTodo(
-                        TodoModel(
-                          title: _titleEC.text,
-                          subtitle: _descriptionEC.text,
-                          isDone: false,
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * .80,
+                        child: TextFormField(
+                          controller: _descriptionEC,
+                          maxLines: 3,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(10.0),
+                            fillColor: AppTheme.primaryColor,
+                            prefixIcon: Image.asset(
+                              'assets/icons/leading_icon.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            hintText: 'Add a note...',
+                            hintStyle: AppTheme.textNormal.copyWith(
+                              color: AppTheme.greyColor,
+                              fontSize: 19,
+                            ),
+                          ),
                         ),
-                      );
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Create',
-                      style: AppTheme.textBold.copyWith(
-                        color: AppTheme.blueColor,
-                        fontSize: 16,
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        if (_titleEC.text != '' && _descriptionEC.text != '') {
+                          _todoController.insertTodo(
+                            TodoModel(
+                              title: _titleEC.text,
+                              subtitle: _descriptionEC.text,
+                              isDone: false,
+                            ),
+                          );
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text(
+                        'Create',
+                        style: AppTheme.textBold.copyWith(
+                          color: AppTheme.blueColor,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

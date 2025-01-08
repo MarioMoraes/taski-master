@@ -48,6 +48,11 @@ final class AppTheme {
         fontWeight: FontWeight.w500,
       ),
       focusColor: greyColor,
+      border: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppTheme.blueColor,
+        ),
+      ),
       labelStyle: const TextStyle(
         fontSize: 14,
         color: greyColor,
@@ -60,57 +65,3 @@ final class AppTheme {
     ),
   );
 }
-
-
-/*
-  // Styles Text
-  static const titleStyle = TextStyle(
-    color: whiteColor,
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-  );
-
-  static const titlePrimaryStyle = TextStyle(
-    color: primaryColor,
-    fontSize: 16,
-    fontWeight: FontWeight.w900,
-    fontFamily: 'Urbanist',
-  );
-
-  static const titleSmallStyle = TextStyle(
-    color: whiteColor,
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    fontFamily: 'Urbanist',
-  );
-
-  static const titleSmallPrimaryStyle = TextStyle(
-    color: primaryColor,
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    fontFamily: 'Urbanist',
-  );
-
-  static const subTitleSmallStyle = TextStyle(
-    color: whiteColor,
-    fontSize: 16,
-    fontWeight: FontWeight.w300,
-    fontFamily: 'Urbanist',
-  );
-
-  static const textPrimaryStyle = TextStyle(
-    color: primaryColor,
-    fontSize: 18,
-    fontWeight: FontWeight.w500,
-    fontFamily: 'Urbanist',
-  );
-
-  static const textYellowStyle = TextStyle(
-    color: yellowColor,
-    fontSize: 13,
-    fontWeight: FontWeight.w500,
-    fontFamily: 'Urbanist',
-  );
-
-  
-*/
