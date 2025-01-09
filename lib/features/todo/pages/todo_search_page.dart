@@ -128,6 +128,11 @@ class _TodoSearchPageState extends State<TodoSearchPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset('assets/images/todo.png'),
+                              const SizedBox(height: 20),
+                              Text(
+                                "No Results Found",
+                                style: AppTheme.textNormal,
+                              )
                             ],
                           ),
                         ),

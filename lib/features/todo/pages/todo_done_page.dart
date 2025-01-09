@@ -71,6 +71,11 @@ class _TodoDonePageState extends State<TodoDonePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset('assets/images/todo.png'),
+                              const SizedBox(height: 20),
+                              Text(
+                                "No Results Found",
+                                style: AppTheme.textNormal,
+                              ),
                             ],
                           ),
                         ),

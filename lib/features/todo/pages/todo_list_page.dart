@@ -74,6 +74,11 @@ class _TodoListPageState extends State<TodoListPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset('assets/images/todo.png'),
+                              const SizedBox(height: 20),
+                              Text(
+                                "You Have No Task Listed",
+                                style: AppTheme.textNormal,
+                              )
                             ],
                           ),
                         ),
