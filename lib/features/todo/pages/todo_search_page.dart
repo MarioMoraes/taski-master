@@ -73,7 +73,10 @@ class _TodoSearchPageState extends State<TodoSearchPage> {
                           ),
                         ),
                         suffixIcon: InkWell(
-                          onTap: () => _textEC.text = "",
+                          onTap: () {
+                            _textEC.text = "";
+                            _todoController.cleanList();
+                          },
                           child: const Icon(
                             Icons.cancel,
                             size: 30,
