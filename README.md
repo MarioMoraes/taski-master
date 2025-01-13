@@ -27,6 +27,9 @@ Application Todo List, Offline First.
 ## Installation App
 
 1. Download project (Zip or Git Clone)
+2. In Folder Project, run FLUTTER PUB GET
 2. Open Visual Studio or Android Studio
-3. Execute application
+4. Execute application
+
+In otherwise, FLUTTER RUN, in Folder Project 
 
